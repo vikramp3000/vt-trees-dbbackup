@@ -14,31 +14,31 @@ constructor(
     return this.carmodelModel.create(model);
     }
 
-    // //get all vehicles
-    // async findAll(): Promise<Vehicle[]> {
-    // return Vehicle.findAll();
-    // }
+    // //get all 
+    async findAll(): Promise<Carmodel[]> {
+    return Carmodel.findAll();
+    }
 
-    // //get vehicle by id
-    // async findOne(vehicle_id: number): Promise<Vehicle> {
-    //     return Vehicle.findOne({ where: { vehicle_id } });
-    // }
+    // //get  by id
+    async findOne(model_id: number): Promise<Carmodel> {
+        return Carmodel.findOne({ where: { model_id } });
+    }
 
-    // //delete user
-    // async delete(vehicle_id: number): Promise<Vehicle> {
-    // const vehicle = await Vehicle.findOne({ where: { vehicle_id } });
-    // await Vehicle.destroy({ where: { vehicle_id } });
-    // return vehicle;
-    // }
+    // //delete 
+    async delete(model_id: number): Promise<Carmodel> {
+    const model = await Carmodel.findOne({ where: { model_id } });
+    await Carmodel.destroy({ where: { model_id } });
+    return model;
+    }
 
-    // //update vehicle
-    // async update(vehicle_id: number, model_id: number, make_id: number, user_id: number, trim: string, year: number, miles: number, image: string, fuel_type: string): Promise<Vehicle> {
-    // const vehicle = await Vehicle.findOne({ where: { vehicle_id } });
-    // if (!vehicle) throw new NotFoundException('Vehicle not found');
-    // Object.assign(vehicle, { vehicle_id, model_id, make_id, user_id, trim, year, miles, image, fuel_type });
-    // await vehicle.save();
-    // return vehicle;
-    // }
+    // //update 
+    async update(model_id: number, make_id: number, model_name: string, offset_amount: number): Promise<Carmodel> {
+    const model = await Carmodel.findOne({ where: { model_id } });
+    if (!model) throw new NotFoundException('model not found');
+    Object.assign(model, { model_id, make_id, model_name, offset_amount });
+    await model.save();
+    return model;
+    }
 }
 /*The Service is a provider that can be injected as a dependency into other providers (like resolvers), modules, etc. 
 Services are used to encapsulate business logic and database interactions. They provide methods that the resolvers 

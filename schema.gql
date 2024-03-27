@@ -45,6 +45,12 @@ type Query {
   getUser(user_id: Float!): UserType!
   getVehicles: [VehicleType!]!
   getVehicle(vehicle_id: Float!): VehicleType!
+  getMakes: [MakeType!]!
+  getMake(make_id: Float!): MakeType!
+  getModels: [CarmodelType!]!
+  getModel(model_id: Float!): CarmodelType!
+  getPurchases: [PurchaseType!]!
+  getPurchase(purchase_id: Float!): PurchaseType!
 }
 
 type Mutation {
@@ -55,6 +61,12 @@ type Mutation {
   deleteVehicle(vehicle_id: Float!): VehicleType!
   updateVehicle(vehicle_id: Float!, model_id: Float!, make_id: Float!, user_id: Float!, trim: String!, year: Float!, miles: Float!, image: String, fuel_type: String!): VehicleType!
   createMake(make_name: String!): MakeType!
+  deleteMake(make_id: Float!): MakeType!
+  updateMake(make_id: Float!, make_name: String!): MakeType!
   createModel(make_id: Float!, model_name: String!, offset_amount: Float!): CarmodelType!
+  deleteModel(model_id: Float!): CarmodelType!
+  updateModel(model_id: Float!, make_id: Float!, model_name: String!, offset_amount: Float!): CarmodelType!
   createPurchase(user_id: Float!, vehicle_id: Float!, number_of_trees: Float!): PurchaseType!
+  deletePurchase(purchase_id: Float!): PurchaseType!
+  updatePurchase(purchase_id: Float!, user_id: Float!, vehicle_id: Float!, number_of_trees: Float!): PurchaseType!
 }

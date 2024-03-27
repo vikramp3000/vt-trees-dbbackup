@@ -7,7 +7,6 @@ import { PurchaseType } from './purchase.type';
 export class PurchaseResolver {
   constructor(private purchaseService: PurchaseService) {}
 
-
     //create 
     @Mutation(returns => PurchaseType)
     createPurchase(
@@ -19,38 +18,34 @@ export class PurchaseResolver {
     }
 
     // //get all vehicles
-    // @Query(returns => [VehicleType])
-    // async getVehicles(): Promise<VehicleType[]> {
-    //     return this.vehicleService.findAll();
-    // }
+    @Query(returns => [PurchaseType])
+    async getPurchases(): Promise<PurchaseType[]> {
+        return this.purchaseService.findAll();
+    }
 
-    // //get vehcile by id
-    // @Query(returns => VehicleType)
-    // async getVehicle(@Args('vehicle_id') vehicle_id: number): Promise<VehicleType> {
-    //     return this.vehicleService.findOne(vehicle_id);
-    // }
+    // //get  by id
+    @Query(returns => PurchaseType)
+    async getPurchase(@Args('purchase_id') purchase_id: number): Promise<PurchaseType> {
+        return this.purchaseService.findOne(purchase_id);
+    }
 
-    // //delete vehicle
-    // @Mutation(returns => VehicleType)
-    // async deleteVehicle(@Args('vehicle_id') vehicle_id: number): Promise<VehicleType> {
-    //     return this.vehicleService.delete(vehicle_id);
-    // }
+    // //delete 
+    @Mutation(returns => PurchaseType)
+    async deletePurchase(@Args('purchase_id') purchase_id: number): Promise<PurchaseType> {
+        return this.purchaseService.delete(purchase_id);
+    }
 
     // //update vehicle  
-    // @Mutation(returns => VehicleType)
-    // async updateVehicle(
-    //     @Args('vehicle_id') vehicle_id: number,
-    //     @Args('model_id') model_id: number,
-    //     @Args('make_id') make_id: number,
-    //     @Args('user_id') user_id: number,
-    //     @Args('trim') trim: string,
-    //     @Args('year') year: number,
-    //     @Args('miles') miles: number,
-    //     @Args('image', { type: () => String, nullable: true }) image: string,
-    //     @Args('fuel_type') fuel_type: string,
-    // ): Promise<VehicleType> {
-    //     return this.vehicleService.update(vehicle_id, model_id, make_id, user_id, trim, year, miles, image, fuel_type);
-    // }
+    @Mutation(returns => PurchaseType)
+    async updatePurchase(
+        @Args('purchase_id') purchase_id: number,
+        @Args('user_id') user_id: number,
+        @Args('vehicle_id') vehicle_id: number,
+        @Args('number_of_trees') number_of_trees: number,
+
+    ): Promise<PurchaseType> {
+        return this.purchaseService.update(purchase_id, user_id, vehicle_id, number_of_trees);
+    }
 }
 
 /*The Resolver is responsible for handling GraphQL operations (queries, mutations, and subscriptions). 
