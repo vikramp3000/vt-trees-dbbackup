@@ -1,33 +1,65 @@
 // user.model.ts
+
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class User extends Model {
     @Column({
-    type: DataType.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+        type: DataType.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
     })
-    id: number;
+    user_id: number;
 
     @Column({
-    type: DataType.STRING,
-    allowNull: false,
+        type: DataType.STRING,
+        allowNull: false,
     })
-    name: string;
+    user_name: string;
 
     @Column({
-    type: DataType.STRING,
-    allowNull: false,
+        type: DataType.STRING,
+        allowNull: false,
     })
-    email: string;
+    user_password: string;
 
     @Column({
-    type: DataType.STRING,
-    allowNull: false,
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
     })
-    password: string;
+    is_admin: boolean;
 }
+
+// import { Column, DataType, Model, Table } from 'sequelize-typescript';
+
+// @Table
+// export class User extends Model {
+//     @Column({
+//     type: DataType.INTEGER,
+//     autoIncrement: true,
+//     primaryKey: true,
+//     })
+//     id: number;
+
+//     @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//     })
+//     name: string;
+
+//     @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//     })
+//     email: string;
+
+//     @Column({
+//     type: DataType.STRING,
+//     allowNull: false,
+//     })
+//     password: string;
+// }
 
 /*The User model is a representation of your User entity in your database. 
 It's used by your application to interact with the User table in the database. 

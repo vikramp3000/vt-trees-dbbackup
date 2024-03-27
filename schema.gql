@@ -2,20 +2,59 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: Float!
-  name: String!
-  email: String!
-  password: String!
+type UserType {
+  user_id: Float!
+  user_name: String!
+  user_password: String!
+  is_admin: Boolean!
+}
+
+type VehicleType {
+  vehicle_id: Float!
+  model_id: Float!
+  make_id: Float!
+  user_id: Float!
+  trim: String!
+  year: Float!
+  miles: Float!
+  image: String!
+  fuel_type: String!
+}
+
+type MakeType {
+  make_id: Float!
+  make_name: String!
+}
+
+type CarmodelType {
+  model_id: Float!
+  make_id: Float!
+  model_name: String!
+  offset_amount: Float!
+}
+
+type PurchaseType {
+  purchase_id: Float!
+  user_id: Float!
+  vehicle_id: Float!
+  number_of_trees: Float!
 }
 
 type Query {
-  getUsers: [User!]!
-  getUser(id: Float!): User!
+  getUsers: [UserType!]!
+  getUser(user_id: Float!): UserType!
+  getVehicles: [VehicleType!]!
+  getVehicle(vehicle_id: Float!): VehicleType!
 }
 
 type Mutation {
-  createUser(name: String!, email: String!, password: String!): User!
-  deleteUser(id: Float!): User!
-  updateUser(id: Float!, name: String!, email: String!, password: String!): User!
+  createUser(user_name: String!, user_password: String!, is_admin: Boolean): UserType!
+  deleteUser(user_id: Float!): UserType!
+  updateUser(user_id: Float!, user_name: String!, user_password: String!, is_admin: Boolean): UserType!
+  createVehicle(model_id: Float!, make_id: Float!, user_id: Float!, trim: String!, year: Float!, miles: Float!, image: String, fuel_type: String!): VehicleType!
+  deleteVehicle(vehicle_id: Float!): VehicleType!
+  updateVehicle(vehicle_id: Float!, model_id: Float!, make_id: Float!, user_id: Float!, trim: String!, year: Float!, miles: Float!, image: String, fuel_type: String!): VehicleType!
+  createMake(make_name: String!): MakeType!
+  createModel(make_id: Float!, model_name: String!, offset_amount: Float!): CarmodelType!
+  createPurchase(user_id: Float!, vehicle_id: Float!, number_of_trees: Float!): PurchaseType!
 }

@@ -10,7 +10,7 @@ export class UserService {
       ) {}
     
       //create user injection
-      async create(user: { name: string; email: string, password: string }): Promise<User> {
+      async create(user: { user_name: string; user_password: string, is_admin: boolean }): Promise<User> {
         return this.userModel.create(user);
       }
 
@@ -20,22 +20,22 @@ export class UserService {
       }
 
       //get user by id
-      async findOne(id: number): Promise<User> {
-        return User.findOne({ where: { id } });
+      async findOne(user_id: number): Promise<User> {
+        return User.findOne({ where: { user_id } });
       }
 
       //delete user
-      async delete(id: number): Promise<User> {
-        const user = await User.findOne({ where: { id } });
-        await User.destroy({ where: { id } });
+      async delete(user_id: number): Promise<User> {
+        const user = await User.findOne({ where: { user_id } });
+        await User.destroy({ where: { user_id } });
         return user;
       }
 
       //update user
-      async update(id: number, name: string, email: string, password: string): Promise<User> {
-        const user = await User.findOne({ where: { id } });
+      async update(user_id: number, user_name: string, user_password: string, is_admin: boolean): Promise<User> {
+        const user = await User.findOne({ where: { user_id } });
         if (!user) throw new NotFoundException('User not found');
-        Object.assign(user, { name, email, password });
+        Object.assign(user, { user_name, user_password, is_admin });
         await user.save();
         return user;
       }
