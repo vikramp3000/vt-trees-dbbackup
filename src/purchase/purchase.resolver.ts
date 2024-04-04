@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query, Int } from '@nestjs/graphql';
 import { Purchase } from './purchase.model';
 import { PurchaseService } from './purchase.service';
 import { PurchaseType } from './purchase.type';
@@ -10,9 +10,9 @@ export class PurchaseResolver {
     //create 
     @Mutation(returns => PurchaseType)
     createPurchase(
-        @Args('user_id') user_id: number,
-        @Args('vehicle_id') vehicle_id: number,
-        @Args('number_of_trees') number_of_trees: number,
+        @Args('user_id', { type: () => Int }) user_id: number,
+        @Args('vehicle_id', { type: () => Int }) vehicle_id: number,
+        @Args('number_of_trees', { type: () => Int }) number_of_trees: number,
     ): Promise<PurchaseType> {
         return this.purchaseService.create({ user_id, vehicle_id, number_of_trees});
     }
@@ -25,23 +25,23 @@ export class PurchaseResolver {
 
     // //get  by id
     @Query(returns => PurchaseType)
-    async getPurchase(@Args('purchase_id') purchase_id: number): Promise<PurchaseType> {
+    async getPurchase(@Args('purchase_id', { type: () => Int }) purchase_id: number): Promise<PurchaseType> {
         return this.purchaseService.findOne(purchase_id);
     }
 
     // //delete 
     @Mutation(returns => PurchaseType)
-    async deletePurchase(@Args('purchase_id') purchase_id: number): Promise<PurchaseType> {
+    async deletePurchase(@Args('purchase_id', { type: () => Int }) purchase_id: number): Promise<PurchaseType> {
         return this.purchaseService.delete(purchase_id);
     }
 
     // //update vehicle  
     @Mutation(returns => PurchaseType)
     async updatePurchase(
-        @Args('purchase_id') purchase_id: number,
-        @Args('user_id') user_id: number,
-        @Args('vehicle_id') vehicle_id: number,
-        @Args('number_of_trees') number_of_trees: number,
+        @Args('purchase_id', { type: () => Int }) purchase_id: number,
+        @Args('user_id', { type: () => Int }) user_id: number,
+        @Args('vehicle_id', { type: () => Int }) vehicle_id: number,
+        @Args('number_of_trees', { type: () => Int }) number_of_trees: number,
 
     ): Promise<PurchaseType> {
         return this.purchaseService.update(purchase_id, user_id, vehicle_id, number_of_trees);

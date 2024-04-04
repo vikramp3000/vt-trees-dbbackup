@@ -3,70 +3,84 @@
 # ------------------------------------------------------
 
 type UserType {
-  user_id: Float!
+  user_id: Int!
   user_name: String!
   user_password: String!
   is_admin: Boolean!
 }
 
 type VehicleType {
-  vehicle_id: Float!
-  model_id: Float!
-  make_id: Float!
-  user_id: Float!
+  vehicle_id: Int!
+  model_id: Int!
+  make_id: Int!
+  user_id: Int!
   trim: String!
-  year: Float!
-  miles: Float!
+  year: Int!
+  miles: Int!
   image: String!
   fuel_type: String!
 }
 
-type MakeType {
-  make_id: Float!
-  make_name: String!
+type CarmodelType {
+  model_id: Int!
+  make_id: Int!
+  model_name: String!
+  offset_amount: Int!
 }
 
-type CarmodelType {
-  model_id: Float!
-  make_id: Float!
+type MakeType {
+  make_id: Int!
+  make_name: String!
+  carmodels: [CarmodelType!]
+}
+
+type MakeAndModel {
+  make_name: String!
   model_name: String!
-  offset_amount: Float!
+  total_trees: Int
 }
 
 type PurchaseType {
-  purchase_id: Float!
-  user_id: Float!
-  vehicle_id: Float!
-  number_of_trees: Float!
+  purchase_id: Int!
+  user_id: Int!
+  vehicle_id: Int!
+  number_of_trees: Int!
 }
 
 type Query {
   getUsers: [UserType!]!
-  getUser(user_id: Float!): UserType!
+  getUser(user_id: Int!): UserType!
+  getUserByName(user_name: String!): UserType!
   getVehicles: [VehicleType!]!
-  getVehicle(vehicle_id: Float!): VehicleType!
+  getVehicle(vehicle_id: Int!): VehicleType!
+  vehiclesByUserId(user_id: Int!): [VehicleType!]!
   getMakes: [MakeType!]!
-  getMake(make_id: Float!): MakeType!
+  getMake(make_id: Int!): MakeType!
+  getModelsByMake(makeName: String!): [CarmodelType!]!
+  getAllMakesAndModels: [MakeAndModel!]!
+  searchMakesAndModels(make_name: String, model_name: String): [MakeAndModel!]!
+  allMakesWithModels: [MakeType!]!
   getModels: [CarmodelType!]!
-  getModel(model_id: Float!): CarmodelType!
+  getModel(model_id: Int!): CarmodelType!
   getPurchases: [PurchaseType!]!
-  getPurchase(purchase_id: Float!): PurchaseType!
+  getPurchase(purchase_id: Int!): PurchaseType!
 }
 
 type Mutation {
   createUser(user_name: String!, user_password: String!, is_admin: Boolean): UserType!
-  deleteUser(user_id: Float!): UserType!
-  updateUser(user_id: Float!, user_name: String!, user_password: String!, is_admin: Boolean): UserType!
-  createVehicle(model_id: Float!, make_id: Float!, user_id: Float!, trim: String!, year: Float!, miles: Float!, image: String, fuel_type: String!): VehicleType!
-  deleteVehicle(vehicle_id: Float!): VehicleType!
-  updateVehicle(vehicle_id: Float!, model_id: Float!, make_id: Float!, user_id: Float!, trim: String!, year: Float!, miles: Float!, image: String, fuel_type: String!): VehicleType!
+  deleteUser(user_id: Int!): UserType!
+  updateUser(user_id: Int!, user_name: String!, user_password: String!, is_admin: Boolean): UserType!
+  createVehicle(model_id: Int!, make_id: Int!, user_id: Int!, trim: String!, year: Int!, miles: Int!, image: String, fuel_type: String!): VehicleType!
+  deleteVehicle(vehicle_id: Int!): VehicleType!
+  updateVehicle(vehicle_id: Int!, model_id: Int!, make_id: Int!, user_id: Int!, trim: String!, year: Int!, miles: Int!, image: String, fuel_type: String!): VehicleType!
   createMake(make_name: String!): MakeType!
-  deleteMake(make_id: Float!): MakeType!
-  updateMake(make_id: Float!, make_name: String!): MakeType!
-  createModel(make_id: Float!, model_name: String!, offset_amount: Float!): CarmodelType!
-  deleteModel(model_id: Float!): CarmodelType!
-  updateModel(model_id: Float!, make_id: Float!, model_name: String!, offset_amount: Float!): CarmodelType!
-  createPurchase(user_id: Float!, vehicle_id: Float!, number_of_trees: Float!): PurchaseType!
-  deletePurchase(purchase_id: Float!): PurchaseType!
-  updatePurchase(purchase_id: Float!, user_id: Float!, vehicle_id: Float!, number_of_trees: Float!): PurchaseType!
+  deleteMake(make_id: Int!): MakeType!
+  updateMake(make_id: Int!, make_name: String!): MakeType!
+  createModel(make_id: Int!, model_name: String!, offset_amount: Int!): CarmodelType!
+  deleteModel(model_id: Int!): CarmodelType!
+  updateModel(model_id: Int!, make_id: Int!, model_name: String!, offset_amount: Int!): CarmodelType!
+  createPurchase(user_id: Int!, vehicle_id: Int!, number_of_trees: Int!): PurchaseType!
+  deletePurchase(purchase_id: Int!): PurchaseType!
+  updatePurchase(purchase_id: Int!, user_id: Int!, vehicle_id: Int!, number_of_trees: Int!): PurchaseType!
+  signIn(user_name: String!, user_password: String!): String!
 }

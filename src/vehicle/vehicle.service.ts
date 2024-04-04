@@ -2,6 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';//
 import { InjectModel } from '@nestjs/sequelize';
 import { Vehicle } from './vehicle.model';
 
+import { User } from '../user/user.model';
+import { Sequelize } from 'sequelize-typescript';
+import { Make } from 'src/make/make.model';
+import { Carmodel } from 'src/carmodel/carmodel.model';
+
 @Injectable()
 export class VehicleService {
 constructor(
@@ -24,6 +29,28 @@ constructor(
         return Vehicle.findOne({ where: { vehicle_id } });
     }
 
+    ///get vehicles by user_id
+    // async findByUserId(user_id: number): Promise<Vehicle[]> {
+    //     return Vehicle.findAll({ where: { user_id } });
+    // }
+    async findByUserId(user_id: number): Promise<any[]> {
+        return this.vehicleModel.findAll({
+            where: { user_id },
+            include: [
+                {
+                    model: Carmodel,
+                    attributes: ['model_name'],
+                },
+                {
+                    model: Make,
+                    attributes: ['make_name'],
+                },
+            ],
+            raw: true,
+        });
+    }
+
+
     //delete user
     async delete(vehicle_id: number): Promise<Vehicle> {
     const vehicle = await Vehicle.findOne({ where: { vehicle_id } });
@@ -39,6 +66,17 @@ constructor(
     await vehicle.save();
     return vehicle;
     }
+
+    // async findAllUsers(): Promise<Vehicle[]> {
+    //     return this.vehicleModel.findAll({
+    //       attributes: {
+    //         include: [
+    //           [Sequelize.literal(`(SELECT user_name FROM users WHERE users.id = vehicle.user_id)`), 'user_name']
+    //         ]
+    //       },
+    //       raw: true
+    //     });
+    //   }
 }
 /*The Service is a provider that can be injected as a dependency into other providers (like resolvers), modules, etc. 
 Services are used to encapsulate business logic and database interactions. They provide methods that the resolvers 

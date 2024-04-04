@@ -1,27 +1,29 @@
 // vehicle/vehicle.type.ts
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType,Int } from '@nestjs/graphql';
+import { CarmodelType } from 'src/carmodel/carmodel.type';
+import { MakeType } from 'src/make/make.type';
 
 @ObjectType()
 export class VehicleType {
-    @Field()
+    @Field(type => Int)
     vehicle_id: number;
 
-    @Field()
+    @Field(type => Int)
     model_id: number;
 
-    @Field()
+    @Field(type => Int)
     make_id: number;
 
-    @Field()
+    @Field(type => Int)
     user_id: number;
 
     @Field()
     trim: string;
 
-    @Field()
+    @Field(type => Int)
     year: number;
 
-    @Field()
+    @Field(type => Int)
     miles: number;
 
     @Field()
@@ -29,4 +31,12 @@ export class VehicleType {
 
     @Field()
     fuel_type: string;
+
+    // @Field(() => CarmodelType)
+    // model: CarmodelType;
+  
+    // @Field(() => MakeType)
+    // make: MakeType;
+
+    
 }

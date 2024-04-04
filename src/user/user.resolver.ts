@@ -1,11 +1,16 @@
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query, Int } from '@nestjs/graphql';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { UserType } from './user.type';
 
+
+
 @Resolver(of => UserType)
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    // Inject AuthService here
+  ) {}
 
   //get all users
   @Query(returns => [UserType])
@@ -15,8 +20,14 @@ export class UserResolver {
 
   //get user by id
   @Query(returns => UserType)
-  async getUser(@Args('user_id') user_id: number): Promise<UserType> {
+  async getUser(@Args('user_id', { type: () => Int }) user_id: number): Promise<UserType> {
     return this.userService.findOne(user_id);
+  }
+
+  //get user by name
+  @Query(returns => UserType)
+  async getUserByName(@Args('user_name') user_name: string): Promise<UserType> {
+    return this.userService.findByName(user_name);
   }
 
   //create user
@@ -31,22 +42,41 @@ export class UserResolver {
 
   //delete user
   @Mutation(returns => UserType)
-  async deleteUser(@Args('user_id') user_id: number): Promise<UserType> {
+  async deleteUser(@Args('user_id', { type: () => Int }) user_id: number): Promise<UserType> {
     return this.userService.delete(user_id);
   }
 
   //update user  
   @Mutation(returns => UserType)
   async updateUser(
-    @Args('user_id') user_id: number,
+    @Args('user_id', { type: () => Int }) user_id: number,
     @Args('user_name') user_name: string,
     @Args('user_password') user_password: string,
     @Args('is_admin', { type: () => Boolean, nullable: true }) is_admin: boolean,
   ): Promise<UserType> {
     return this.userService.update(user_id, user_name, user_password, is_admin);
   }
+
+  ////AUTH
+  // @Mutation('login')
+  // async login(@Args('username') username: string, @Args('password') password: string) {
+  //   const user = await this.authService.validateUser(username, password);
+  //   if (!user) {
+  //     throw new UnauthorizedException();
+  //   }
+  //   return this.authService.login(user);
+  // }
+
+  // @Query('getMe')
+  // @UseGuards(AuthGuard())
+  // getMe(@CurrentUser() user: User) {
+  //   return user;
+  // }
+
 }
+
 // import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+
 // import { User } from './user.model';
 // import { UserService } from './user.service';
 // import { UserType } from './user.type';

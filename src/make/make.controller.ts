@@ -1,10 +1,11 @@
 // user.controller.ts
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { MakeService } from './make.service';
 
 @Controller('makes')
 export class MakeController {
     constructor(private makeService: MakeService) {}
+
 }
 
 /*In summary, the VehicleController is responsible for handling HTTP requests at the /vehicles endpoint. 

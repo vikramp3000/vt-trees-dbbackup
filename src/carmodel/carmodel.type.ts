@@ -1,16 +1,16 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class CarmodelType {
-    @Field()
+    @Field(type => Int)
     model_id: number;
 
-    @Field()
+    @Field(type => Int)
     make_id: number;
 
     @Field()
     model_name: string;
 
-    @Field()
+    @Field(type => Int)
     offset_amount: number;
 }

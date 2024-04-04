@@ -24,6 +24,11 @@ export class UserService {
         return User.findOne({ where: { user_id } });
       }
 
+      //get user by name
+      async findByName(user_name: string): Promise<User> {
+        return User.findOne({ where: { user_name } });
+      }
+
       //delete user
       async delete(user_id: number): Promise<User> {
         const user = await User.findOne({ where: { user_id } });

@@ -1,6 +1,8 @@
 // user.model.ts
 
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table, HasMany } from 'sequelize-typescript';
+import { Vehicle } from 'src/vehicle/vehicle.model';
+import { Purchase } from 'src/purchase/purchase.model';
 
 @Table
 export class User extends Model {
@@ -29,6 +31,12 @@ export class User extends Model {
         defaultValue: false,
     })
     is_admin: boolean;
+
+    @HasMany(() => Vehicle)
+    vehicles: Vehicle[];
+
+    @HasMany(() => Purchase)
+    purchases: Purchase[];
 }
 
 // import { Column, DataType, Model, Table } from 'sequelize-typescript';
